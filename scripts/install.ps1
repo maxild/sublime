@@ -10,7 +10,7 @@
 #   4) Install Package Control
 #
 
-function Get-Basename ($path) { Split-Path -parent $path }
+function Get-Dirname ($path) { Split-Path -parent $path }
 
 # http://stackoverflow.com/questions/817794/find-out-whether-a-file-is-a-symbolic-link-in-powershell
 function Test-SymLink([string]$path) {
@@ -57,17 +57,30 @@ function Remove-SymLink ($link)
 
 function Main {
   # Path to git repo Packages/User folder (source)
-  $scriptsFolder = Get-Basename "$PSCommandPath"
-  $root = Get-Basename "$scriptsFolder"
+  $scriptsFolder = Get-Dirname "$PSCommandPath"
+  $root = Get-Dirname "$scriptsFolder"
+
   $userOsSettingsFolder="User (OS Settings)"
   $userFolder="User"
+
+  # path to this repos 'Packages/User (OS Settings)' and 'Packages/User' folders
   $gitRepoUserOsSettingsFolder = Join-Path "$root" "Packages\$userOsSettingsFolder"
   $gitRepoUserFolder = Join-Path "$root" "$userFolder"
 
-  # Path to Sublime Text Packages/User folder
-  $sublimePackagesFolder = "${env:AppData}\Sublime Text 3\Packages"
+  # path to ST3 data dir 'Packages/User (OS Settings)' and 'Packages/User' folders
+  $sublimeDataFolder = Join-Path "${env:AppData}" "Sublime Text 3"
+  $sublimePackagesFolder = Join-Path "$sublimeDataFolder" "Packages"
   $sublimeUserOsSettingsFolder = Join-Path "$sublimePackagesFolder" "$userOsSettingsFolder"
   $sublimeUserFolder = Join-Path "$sublimePackagesFolder" "$userFolder"
+
+  #
+  # Packages/User (OS Settings)
+  #
+
+  if ( Test-Path $sublimeUserOsSettingsFolder -and !(Test-Path -PathType Container $sublimeUserOsSettingsFolder) ) {
+      echo "Error: he path '$sublimeUserOsSettingsFolder' is not a directory."
+      exit
+  }
 
   if ( Test-SymLink "$sublimeUserOsSettingsFolder" ) {
       echo "The folder '$sublimeUserOsSettingsFolder' is already a symlink."
@@ -80,11 +93,19 @@ function Main {
       New-SymLink "$sublimeUserOsSettingsFolder" "$gitRepoUserOsSettingsFolder"
   }
 
-  if ( !(Test-Path -PathType Container $sublimeUserFolder) ) {
-    echo "Error: The folder '$sublimeUserFolder' does not exist."
-    exit
+  #
+  # Packages/User
+  #
+
+  if ( Test-Path $sublimeUserFolder -and !(Test-Path -PathType Container $sublimeUserFolder) ) {
+      echo "Error: he path '$sublimeUserFolder' is not a directory."
+      exit
   }
-  elseif ( !(Test-SymLink $sublimeUserFolder) ) {
+
+  if ( Test-SymLink $sublimeUserFolder ) {
+    echo "The folder '$sublimeUserFolder' is already a symlink."
+  }
+  else {
     echo "The folder '$sublimeUserFolder' does exist and the folder is not a symlink......yet!"
 
     # rename/backup existing Packages/User folder
@@ -92,11 +113,7 @@ function Main {
     echo "Renamed 'Packages/User' folder to 'Packages/_User' (i.e. created a backup)."
 
     # create symlink for Packages/User folder
-    #Remove-SymLink "$sublimeUserFolder"
     New-SymLink "$sublimeUserFolder" "$gitRepoUserFolder"
-  }
-  else {
-    echo "The folder '$sublimeUserFolder' is already a symlink."
   }
 }
 
