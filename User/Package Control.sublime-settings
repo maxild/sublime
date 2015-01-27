@@ -20,9 +20,11 @@
 		"PackageResourceViewer",
 		"PowerShell",
 		"SideBarEnhancements",
+		"SublimeCodeIntel",
 		"SublimeLinter",
 		"SublimeLinter-jshint",
 		"Syntax Highlighting for Sass",
+		"Theme - Soda",
 		"TrailingSpaces"
 	]
 }
