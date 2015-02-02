@@ -28,8 +28,8 @@
 	"hot_exit": false,
 	"ignored_packages":
 	[
-		"Markdown",
-		"Vintage"
+		"Vintage",
+		"Markdown"
 	],
 	"line_padding_bottom": 5,
 	"match_brackets": true,
@@ -41,9 +41,9 @@
 	],
 	"show_encoding": true,
 	"show_line_endings": true,
+	"soda_folder_icons": true,
 	"tab_size": 2,
 	"theme": "Soda Light 3.sublime-theme",
-  "soda_folder_icons": true,
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"word_wrap": true
