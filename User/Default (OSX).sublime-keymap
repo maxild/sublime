@@ -1,4 +1,12 @@
 [
+  // ASP.NET 5
+  // show/hide output window (build errors)
+  // Note: You can just hit escape to close it
+  { "keys": ["f12"], "command": "show_panel", "args": {"panel": "output.exec"} },
+  //{ "keys": ["ctrl+f12"], "command": "hide_panel", "args": {"panel": "output.exec"} },
+
+
+
   { "keys": ["alt+m"], "command": "markdown_preview", "args": {"target": "browser", "parser":"markdown"} },
   { "keys": ["ctrl+b"], "command": "build" },
 

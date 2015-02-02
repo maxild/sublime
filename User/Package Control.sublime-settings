@@ -11,6 +11,7 @@
 	[
 		"AdvancedNewFile",
 		"BracketHighlighter",
+		"C# Snippets",
 		"DocBlockr",
 		"Dotfiles Syntax Highlighting",
 		"EditorConfig",
@@ -22,6 +23,7 @@
 		"Kulture",
 		"Markdown Preview",
 		"MarkdownEditing",
+		"OmniSharp",
 		"Package Control",
 		"PackageResourceViewer",
 		"PowerShell",
