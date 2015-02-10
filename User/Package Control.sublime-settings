@@ -1,4 +1,5 @@
 {
+    "timeout": 60,
     "in_process_packages":
     [
     ],
