@@ -77,7 +77,7 @@ function Main {
   # Packages/User (OS Settings)
   #
 
-  if ( Test-Path $sublimeUserOsSettingsFolder -and !(Test-Path -PathType Container $sublimeUserOsSettingsFolder) ) {
+  if ( (Test-Path $sublimeUserOsSettingsFolder) -and !(Test-Path -PathType Container $sublimeUserOsSettingsFolder) ) {
       echo "Error: he path '$sublimeUserOsSettingsFolder' is not a directory."
       exit
   }
@@ -97,7 +97,7 @@ function Main {
   # Packages/User
   #
 
-  if ( Test-Path $sublimeUserFolder -and !(Test-Path -PathType Container $sublimeUserFolder) ) {
+  if ( (Test-Path $sublimeUserFolder) -and !(Test-Path -PathType Container $sublimeUserFolder) ) {
       echo "Error: he path '$sublimeUserFolder' is not a directory."
       exit
   }
@@ -111,7 +111,7 @@ function Main {
     # rename/backup existing Packages/User folder
     Rename-Item -Path "$sublimeUserFolder" -NewName "_User"
     echo "Renamed 'Packages/User' folder to 'Packages/_User' (i.e. created a backup)."
-
+    
     # create symlink for Packages/User folder
     New-SymLink "$sublimeUserFolder" "$gitRepoUserFolder"
   }
