@@ -1,36 +1,35 @@
 {
-    "timeout": 60,
-    "in_process_packages":
-    [
-    ],
-    "installed_packages":
-    [
-        "AdvancedNewFile",
-        "BracketHighlighter",
-        "C# Snippets",
-        "DocBlockr",
-        "Dotfiles Syntax Highlighting",
-        "EditorConfig",
-        "Emmet",
-        "Handlebars",
-        "HTML5",
-        "JavaScript & NodeJS Snippets",
-        "JsFormat",
-        "Kulture",
-        "Markdown Preview",
-        "MarkdownEditing",
-        "OmniSharp",
-        "Package Control",
-        "PackageResourceViewer",
-        "PowerShell",
-        "SASS Snippets",
-        "SideBarEnhancements",
-        "SublimeCodeIntel",
-        "SublimeLinter",
-        "SublimeLinter-jshint",
-        "SyncedSideBar",
-        "Syntax Highlighting for Sass",
-        "Theme - Soda",
-        "TrailingSpaces"
-    ]
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"AdvancedNewFile",
+		"BracketHighlighter",
+		"C# Snippets",
+		"DocBlockr",
+		"Dotfiles Syntax Highlighting",
+		"EditorConfig",
+		"Emmet",
+		"Handlebars",
+		"HTML5",
+		"JavaScript & NodeJS Snippets",
+		"JsFormat",
+		"Kulture",
+		"Markdown Preview",
+		"MarkdownEditing",
+		"OmniSharp",
+		"Package Control",
+		"PackageResourceViewer",
+		"PowerShell",
+		"SASS Snippets",
+		"SideBarEnhancements",
+		"SublimeLinter",
+		"SublimeLinter-jshint",
+		"SyncedSideBar",
+		"Syntax Highlighting for Sass",
+		"Theme - Soda",
+		"TrailingSpaces"
+	],
+	"timeout": 60
 }
