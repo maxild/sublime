@@ -23,7 +23,8 @@ function Test-SymLink([string]$path) {
 
 function New-SymLink ($link, $target)
 {
-    if ( (Get-Item $target) -is [System.IO.DirectoryInfo] )
+    #if ( (Get-Item $target) -is [System.IO.DirectoryInfo] )
+    if ( Test-Path -Path "'$target'" -PathType Container )
     {
         $command = "cmd /c mklink /d"
     }
@@ -111,7 +112,7 @@ function Main {
     # rename/backup existing Packages/User folder
     Rename-Item -Path "$sublimeUserFolder" -NewName "_User"
     echo "Renamed 'Packages/User' folder to 'Packages/_User' (i.e. created a backup)."
-    
+
     # create symlink for Packages/User folder
     New-SymLink "$sublimeUserFolder" "$gitRepoUserFolder"
   }
