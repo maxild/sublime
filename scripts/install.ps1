@@ -1,4 +1,4 @@
-  #
+#
 # Script to backup the old Packages/User folder setup and
 # create new Packages/User folder that is a symlink to
 # this repos User folder.
@@ -26,7 +26,7 @@ function New-SymLink ($link, $target)
     #if ( (Get-Item $target) -is [System.IO.DirectoryInfo] )
     if ( Test-Path -Path "'$target'" -PathType Container )
     {
-        $command = "cmd /c mklink /d"
+        $command = "cmd /c mklink /D"
     }
     else
     {
@@ -79,7 +79,7 @@ function Main {
   #
 
   if ( (Test-Path $sublimeUserOsSettingsFolder) -and !(Test-Path -PathType Container $sublimeUserOsSettingsFolder) ) {
-      echo "Error: he path '$sublimeUserOsSettingsFolder' is not a directory."
+      echo "Error: The path '$sublimeUserOsSettingsFolder' is not a directory."
       exit
   }
 
@@ -99,7 +99,7 @@ function Main {
   #
 
   if ( (Test-Path $sublimeUserFolder) -and !(Test-Path -PathType Container $sublimeUserFolder) ) {
-      echo "Error: he path '$sublimeUserFolder' is not a directory."
+      echo "Error: The path '$sublimeUserFolder' is not a directory."
       exit
   }
 
