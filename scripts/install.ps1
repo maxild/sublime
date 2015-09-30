@@ -10,7 +10,8 @@
 #   4) Install Package Control
 #
 
-function Get-Dirname ($path) { Split-Path -parent $path }
+function Get-Dirname($path) { Split-Path -parent $path }
+function Is-Directory($path) { return Test-Path -Path $path -PathType Container }
 
 # http://stackoverflow.com/questions/817794/find-out-whether-a-file-is-a-symbolic-link-in-powershell
 function Test-SymLink([string]$path) {
@@ -23,8 +24,7 @@ function Test-SymLink([string]$path) {
 
 function New-SymLink ($link, $target)
 {
-    #if ( (Get-Item $target) -is [System.IO.DirectoryInfo] )
-    if ( Test-Path -Path "'$target'" -PathType Container )
+    if ( Is-Directory $target )
     {
         $command = "cmd /c mklink /D"
     }
@@ -38,9 +38,9 @@ function New-SymLink ($link, $target)
 
 function Remove-SymLink ($link)
 {
-    if (Test-Path -Path "'$link'" -PathType Container)
+    if (Is-Directory $link)
     {
-      # If you have a symbolic link that is a directory (made with mklink /d)
+      # If you have a symbolic link that is a directory (made with mklink /D)
       # then using del will delete all of the files in the target directory
       # (the directory that the link points to), rather than just the link.
       # SOLUTION: rmdir on the other hand will only delete the directory link,
@@ -78,7 +78,7 @@ function Main {
   # Packages/User (OS Settings)
   #
 
-  if ( (Test-Path $sublimeUserOsSettingsFolder) -and !(Test-Path -PathType Container $sublimeUserOsSettingsFolder) ) {
+  if ( (Test-Path $sublimeUserOsSettingsFolder) -and !(Is-Directory $sublimeUserOsSettingsFolder) ) {
       echo "Error: The path '$sublimeUserOsSettingsFolder' is not a directory."
       exit
   }
@@ -86,7 +86,7 @@ function Main {
   if ( Test-SymLink "$sublimeUserOsSettingsFolder" ) {
       echo "The folder '$sublimeUserOsSettingsFolder' is already a symlink."
   }
-  elseif ( Test-Path "$sublimeUserOsSettingsFolder") {
+  elseif ( Test-Path $sublimeUserOsSettingsFolder) {
       echo "Error: The folder '$sublimeUserOsSettingsFolder' already does exist, but it is NOT a symlink."
       exit
   }
@@ -98,7 +98,7 @@ function Main {
   # Packages/User
   #
 
-  if ( (Test-Path $sublimeUserFolder) -and !(Test-Path -PathType Container $sublimeUserFolder) ) {
+  if ( (Test-Path $sublimeUserFolder) -and !(Is-Directory $sublimeUserFolder) ) {
       echo "Error: The path '$sublimeUserFolder' is not a directory."
       exit
   }
@@ -110,8 +110,10 @@ function Main {
     echo "The folder '$sublimeUserFolder' does exist and the folder is not a symlink......yet!"
 
     # rename/backup existing Packages/User folder
-    Rename-Item -Path "$sublimeUserFolder" -NewName "_User"
-    echo "Renamed 'Packages/User' folder to 'Packages/_User' (i.e. created a backup)."
+    if (Test-Path $sublimeUserFolder) {
+      Rename-Item -Path "$sublimeUserFolder" -NewName "_User"
+      echo "Renamed 'Packages/User' folder to 'Packages/_User' (i.e. created a backup)."
+    }
 
     # create symlink for Packages/User folder
     New-SymLink "$sublimeUserFolder" "$gitRepoUserFolder"
